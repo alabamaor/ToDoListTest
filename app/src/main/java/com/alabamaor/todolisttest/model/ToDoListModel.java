@@ -5,9 +5,9 @@ public class ToDoListModel {
     String item;
     Boolean isComplete;
 
-    public ToDoListModel(String item, Boolean isComplete) {
+    public ToDoListModel(String item) {
         this.item = item;
-        this.isComplete = isComplete;
+        this.isComplete = false;
     }
 
     public String getItem() {

@@ -1,9 +1,11 @@
 package com.alabamaor.todolisttest.view;
 
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,9 +21,11 @@ import butterknife.ButterKnife;
 public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ListViewHolder> {
 
     private List<ToDoListModel> toDoList;
+    private ToDoListItem listener;
 
 
     public ToDoListAdapter(List<ToDoListModel> toDoList) {
+        this.listener = null;
         this.toDoList = toDoList;
     }
 
@@ -47,6 +51,10 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ListVi
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null)
+                listener.onItemSelected(holder.itemView, position);
+        });
         holder.bind(toDoList.get(position));
     }
 
@@ -56,11 +64,24 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ListVi
     }
 
 
+    public ToDoListItem getListItemListener() {
+        return listener;
+    }
+
+    public ToDoListAdapter setListItemListener(ToDoListItem listener) {
+        this.listener = listener;
+        return this;
+    }
+
+    public interface ToDoListItem {
+        void onItemSelected(View v, int position);
+    }
+
 
     class ListViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.listTileCheckBox)
-        CheckBox item;
+        @BindView(R.id.itemCountTextView)
+        TextView item;
 
 
         public ListViewHolder(@NonNull View itemView) {
@@ -70,7 +91,15 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ListVi
 
         public void bind(ToDoListModel toDoListModel) {
             item.setText(toDoListModel.getItem());
-            item.setChecked(toDoListModel.isComplete());
+
+            if (toDoListModel.isComplete()){
+                item.setPaintFlags(item.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            }
+            else {
+                item.setPaintFlags(item.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+
+            }
+
         }
     }
 
