@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">ToDoListTest</string>
+    <string name="no_items_in_the_list">No Items in the list!</string>
+    <string name="one_item_in_the_list">Only One Item in the list!</string>
+    <string name="items_in_the_list"> Items in the list!</string>
 </resources>
