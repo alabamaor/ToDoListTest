@@ -4,7 +4,6 @@ import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -92,10 +91,9 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ListVi
         public void bind(ToDoListModel toDoListModel) {
             item.setText(toDoListModel.getItem());
 
-            if (toDoListModel.isComplete()){
+            if (toDoListModel.isComplete()) {
                 item.setPaintFlags(item.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            }
-            else {
+            } else {
                 item.setPaintFlags(item.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
             }
